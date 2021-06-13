@@ -56,7 +56,7 @@ testRouter.get("/Test", function (req, res) { return __awaiter(void 0, void 0, v
                 page = _b.sent();
                 _b.label = 3;
             case 3:
-                _b.trys.push([3, 9, , 10]);
+                _b.trys.push([3, 9, , 11]);
                 return [4 /*yield*/, page.goto(url, {
                         waitUntil: ["load", "domcontentloaded", "networkidle0", "networkidle2"]
                     })];
@@ -72,10 +72,13 @@ testRouter.get("/Test", function (req, res) { return __awaiter(void 0, void 0, v
                 // const webs = await page.evaluate(() => Array.from(document.querySelectorAll('#offer_has_coupon > div.price > span.price-value > span'), element => element.innerHTML));
                 console.log(urlImg);
                 return [4 /*yield*/, page.evaluate(function () {
+                        var _a;
+                        var img = (_a = document.querySelector('#gamepageSlider > div.gamepage__slide.gallery-slider.showing > a > img')) === null || _a === void 0 ? void 0 : _a.getAttribute('src');
                         var elemnts = Array.from(document.querySelectorAll('#offer_offer'));
                         var webs = elemnts.map(function (element) {
                             var _a, _b, _c, _d, _e, _f;
                             var tmp = {};
+                            tmp.imgGame = img;
                             tmp.web = (_a = element.querySelector('#offer_merchant_name')) === null || _a === void 0 ? void 0 : _a.innerHTML;
                             //  tmp.precio = element.querySelector('#offer_has_coupon > div.price > span.price-value')?.textContent?.replace(/\s/g,'')
                             if (((_b = element.querySelector('#offer_has_coupon > div.price > span.price-value')) === null || _b === void 0 ? void 0 : _b.textContent) == null) {
@@ -95,12 +98,15 @@ testRouter.get("/Test", function (req, res) { return __awaiter(void 0, void 0, v
             case 8:
                 _b.sent();
                 res.send(elementos);
-                return [3 /*break*/, 10];
+                return [3 /*break*/, 11];
             case 9:
                 error_1 = _b.sent();
+                return [4 /*yield*/, browser.close()];
+            case 10:
+                _b.sent();
                 res.status(500).send(error_1);
-                return [3 /*break*/, 10];
-            case 10: return [2 /*return*/];
+                return [3 /*break*/, 11];
+            case 11: return [2 /*return*/];
         }
     });
 }); });

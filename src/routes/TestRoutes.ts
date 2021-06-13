@@ -40,10 +40,12 @@ testRouter.get("/Test", async (req, res) => {
   // });
 
     const elementos = await page.evaluate(() => {
+        let img = document.querySelector('#gamepageSlider > div.gamepage__slide.gallery-slider.showing > a > img')?.getAttribute('src');
         let elemnts = Array.from(document.querySelectorAll('#offer_offer'));
         let webs = elemnts.map(element => {
           
            const tmp= {} as any;
+            tmp.imgGame = img;
             tmp.web = element.querySelector('#offer_merchant_name')?.innerHTML;
           //  tmp.precio = element.querySelector('#offer_has_coupon > div.price > span.price-value')?.textContent?.replace(/\s/g,'')
             if(element.querySelector('#offer_has_coupon > div.price > span.price-value')?.textContent == null){
@@ -62,6 +64,7 @@ testRouter.get("/Test", async (req, res) => {
     res.send(elementos);
  
   } catch (error) {
+    await browser.close();
     res.status(500).send(error);
   }
 
