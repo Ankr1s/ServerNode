@@ -2,7 +2,9 @@
 var express_1 = require("express");
 var UserRoutes = require("./UserRoutes");
 var TestRoutes = require("./TestRoutes");
+var SearchRoutes = require("./SearchRoutes");
 var router = express_1.Router();
 router.use('/users', UserRoutes);
 router.use('/test', TestRoutes);
+router.use('/search', SearchRoutes);
 module.exports = router;

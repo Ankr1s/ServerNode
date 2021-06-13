@@ -3,12 +3,8 @@ const searchRouter = Router();
 const puppeteer = require('puppeteer');
 
 
+searchRouter.get("/searchGame", async (req, res) => {
 
-
-
-searchRouter.get("/Test", async (req, res) => {
-    const { authorization } = req.headers;
-    const { email, password } = req.body;
     const url = "https://www.allkeyshop.com/blog/buy-sea-of-thieves-cd-key-compare-prices/";
     const browser = await puppeteer.launch({
       headless : false   
@@ -22,15 +18,14 @@ searchRouter.get("/Test", async (req, res) => {
     }); 
     
     await page.waitForSelector('#offer_offer');
-    // await page.waitForTimeout(0);
-
-    const urlImg = await page.$$eval('#gamepageSlider > div.gamepage__slide.gallery-slider.showing > a > img[src]', imgs => imgs.map(img => img.getAttribute('src')));
 
     const elementos = await page.evaluate(() => {
+        let img = document.querySelector('#gamepageSlider > div.gamepage__slide.gallery-slider.showing > a > img')?.getAttribute('src');
         let elemnts = Array.from(document.querySelectorAll('#offer_offer'));
         let webs = elemnts.map(element => {
           
            const tmp= {} as any;
+            tmp.imgGame = img;
             tmp.web = element.querySelector('#offer_merchant_name')?.innerHTML;
             if(element.querySelector('#offer_has_coupon > div.price > span.price-value')?.textContent == null){
               tmp.precio = element.querySelector('#offer_has_not_coupon > span > span')?.textContent?.replace(/\s/g,'') ;
@@ -47,6 +42,7 @@ searchRouter.get("/Test", async (req, res) => {
     res.send(elementos);
  
   } catch (error) {
+    await browser.close();
     res.status(500).send(error);
   }
 
@@ -54,6 +50,3 @@ searchRouter.get("/Test", async (req, res) => {
 
 
 export = searchRouter;
-
-
-

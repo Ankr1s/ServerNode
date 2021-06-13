@@ -38,41 +38,39 @@ var __generator = (this && this.__generator) || function (thisArg, body) {
 var express_1 = require("express");
 var searchRouter = express_1.Router();
 var puppeteer = require('puppeteer');
-searchRouter.get("/Test", function (req, res) { return __awaiter(void 0, void 0, void 0, function () {
-    var authorization, _a, email, password, url, browser, page, urlImg, elementos, error_1;
-    return __generator(this, function (_b) {
-        switch (_b.label) {
+searchRouter.get("/searchGame", function (req, res) { return __awaiter(void 0, void 0, void 0, function () {
+    var url, browser, page, elementos, error_1;
+    return __generator(this, function (_a) {
+        switch (_a.label) {
             case 0:
-                authorization = req.headers.authorization;
-                _a = req.body, email = _a.email, password = _a.password;
                 url = "https://www.allkeyshop.com/blog/buy-sea-of-thieves-cd-key-compare-prices/";
                 return [4 /*yield*/, puppeteer.launch({
                         headless: false
                     })];
             case 1:
-                browser = _b.sent();
+                browser = _a.sent();
                 return [4 /*yield*/, browser.newPage()];
             case 2:
-                page = _b.sent();
-                _b.label = 3;
+                page = _a.sent();
+                _a.label = 3;
             case 3:
-                _b.trys.push([3, 9, , 10]);
+                _a.trys.push([3, 8, , 10]);
                 return [4 /*yield*/, page.goto(url, {
                         waitUntil: ["load", "domcontentloaded", "networkidle0", "networkidle2"]
                     })];
             case 4:
-                _b.sent();
+                _a.sent();
                 return [4 /*yield*/, page.waitForSelector('#offer_offer')];
             case 5:
-                _b.sent();
-                return [4 /*yield*/, page.$$eval('#gamepageSlider > div.gamepage__slide.gallery-slider.showing > a > img[src]', function (imgs) { return imgs.map(function (img) { return img.getAttribute('src'); }); })];
-            case 6:
-                urlImg = _b.sent();
+                _a.sent();
                 return [4 /*yield*/, page.evaluate(function () {
+                        var _a;
+                        var img = (_a = document.querySelector('#gamepageSlider > div.gamepage__slide.gallery-slider.showing > a > img')) === null || _a === void 0 ? void 0 : _a.getAttribute('src');
                         var elemnts = Array.from(document.querySelectorAll('#offer_offer'));
                         var webs = elemnts.map(function (element) {
                             var _a, _b, _c, _d, _e, _f;
                             var tmp = {};
+                            tmp.imgGame = img;
                             tmp.web = (_a = element.querySelector('#offer_merchant_name')) === null || _a === void 0 ? void 0 : _a.innerHTML;
                             if (((_b = element.querySelector('#offer_has_coupon > div.price > span.price-value')) === null || _b === void 0 ? void 0 : _b.textContent) == null) {
                                 tmp.precio = (_d = (_c = element.querySelector('#offer_has_not_coupon > span > span')) === null || _c === void 0 ? void 0 : _c.textContent) === null || _d === void 0 ? void 0 : _d.replace(/\s/g, '');
@@ -84,15 +82,18 @@ searchRouter.get("/Test", function (req, res) { return __awaiter(void 0, void 0,
                         });
                         return webs;
                     })];
-            case 7:
-                elementos = _b.sent();
+            case 6:
+                elementos = _a.sent();
                 return [4 /*yield*/, browser.close()];
-            case 8:
-                _b.sent();
+            case 7:
+                _a.sent();
                 res.send(elementos);
                 return [3 /*break*/, 10];
+            case 8:
+                error_1 = _a.sent();
+                return [4 /*yield*/, browser.close()];
             case 9:
-                error_1 = _b.sent();
+                _a.sent();
                 res.status(500).send(error_1);
                 return [3 /*break*/, 10];
             case 10: return [2 /*return*/];
