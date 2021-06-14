@@ -1,9 +1,9 @@
 import * as jwt from './jwt';
-const PATH_WITHOUT_JWT: string[] = ['/users/login', '/users/register', '/search/searchGame'];
+const PATH_WITHOUT_JWT: string[] = ['/users/login', '/users/register', '/search/searchGame', '/games/addGame'];
 
 export function middleware(req: any, res: any, next: any) {
-    console.log('BODY::', req.body)
-    console.log('QUERY::', req.query)
+    // console.log('BODY::', req.body)
+    // console.log('QUERY::', req.query)
     if (!PATH_WITHOUT_JWT.includes(req.path)) {
         if (req.headers && req.headers.authorization) {
             const token = req.headers.authorization.split(" ")[1];

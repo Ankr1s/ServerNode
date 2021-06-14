@@ -10,12 +10,17 @@ userRouter.post("/Register", async (req, res) => {
         email,
         password
     }
-    
     const user = new UserModel(payload);
-
   try {
-    await user.save();
-    res.send({user});
+    const users = await UserModel.findOne({ email: email});
+    if (users != null){
+      res.status(400).send();
+    }else{
+      await user.save();
+      res.send({user});
+    }
+    
+  
   } catch (error) {
     res.status(500).send(error);
   }
@@ -28,10 +33,14 @@ userRouter.post("/Login", async (req, res) => {
 
   try{
    
-    const users = await UserModel.findOne({ email: email });
+    const users = await UserModel.findOne({ email: email, password: password });
     console.log(users)
-    res.send(users +"  " + jwt);
-   
+    if(users == null){
+      res.status(400).send();
+    }else{
+      res.status(200).send();
+    }
+  
   } catch(error){
     res.status(500).send(error);
   }

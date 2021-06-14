@@ -38,12 +38,14 @@ var __generator = (this && this.__generator) || function (thisArg, body) {
 var express_1 = require("express");
 var searchRouter = express_1.Router();
 var puppeteer = require('puppeteer');
-searchRouter.get("/searchGame", function (req, res) { return __awaiter(void 0, void 0, void 0, function () {
-    var url, browser, page, elementos, error_1;
+searchRouter.post("/searchGame", function (req, res) { return __awaiter(void 0, void 0, void 0, function () {
+    var gameName, game, url, browser, page, elementos, error_1;
     return __generator(this, function (_a) {
         switch (_a.label) {
             case 0:
-                url = "https://www.allkeyshop.com/blog/buy-sea-of-thieves-cd-key-compare-prices/";
+                gameName = req.body.gameName;
+                game = gameName.replace(/\s/g, '-');
+                url = "https://www.allkeyshop.com/blog/buy-" + game + "-cd-key-compare-prices/";
                 return [4 /*yield*/, puppeteer.launch({
                         headless: false
                     })];
@@ -54,20 +56,17 @@ searchRouter.get("/searchGame", function (req, res) { return __awaiter(void 0, v
                 page = _a.sent();
                 _a.label = 3;
             case 3:
-                _a.trys.push([3, 8, , 10]);
+                _a.trys.push([3, 7, , 9]);
                 return [4 /*yield*/, page.goto(url, {
                         waitUntil: ["load", "domcontentloaded", "networkidle0", "networkidle2"]
                     })];
             case 4:
                 _a.sent();
-                return [4 /*yield*/, page.waitForSelector('#offer_offer')];
-            case 5:
-                _a.sent();
                 return [4 /*yield*/, page.evaluate(function () {
                         var _a;
                         var img = (_a = document.querySelector('#gamepageSlider > div.gamepage__slide.gallery-slider.showing > a > img')) === null || _a === void 0 ? void 0 : _a.getAttribute('src');
                         var elemnts = Array.from(document.querySelectorAll('#offer_offer'));
-                        var webs = elemnts.map(function (element) {
+                        var games = elemnts.map(function (element) {
                             var _a, _b, _c, _d, _e, _f, _g;
                             var tmp = {};
                             tmp.imgGame = img;
@@ -81,23 +80,28 @@ searchRouter.get("/searchGame", function (req, res) { return __awaiter(void 0, v
                             tmp.buyUrl = (_g = element.querySelector('div.offers-table-row-cell.buy-btn-cell > a.d-lg-none.buy-btn.x-offer-buy-btn')) === null || _g === void 0 ? void 0 : _g.getAttribute('href');
                             return tmp;
                         });
-                        return webs;
+                        return games;
                     })];
-            case 6:
+            case 5:
                 elementos = _a.sent();
                 return [4 /*yield*/, browser.close()];
-            case 7:
+            case 6:
                 _a.sent();
-                res.send(elementos);
-                return [3 /*break*/, 10];
-            case 8:
+                if (elementos.length == 0) {
+                    res.status(400).send();
+                }
+                else {
+                    res.send(elementos);
+                }
+                return [3 /*break*/, 9];
+            case 7:
                 error_1 = _a.sent();
                 return [4 /*yield*/, browser.close()];
-            case 9:
+            case 8:
                 _a.sent();
                 res.status(500).send(error_1);
-                return [3 /*break*/, 10];
-            case 10: return [2 /*return*/];
+                return [3 /*break*/, 9];
+            case 9: return [2 /*return*/];
         }
     });
 }); });

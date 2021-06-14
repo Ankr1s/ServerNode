@@ -3,9 +3,13 @@ const searchRouter = Router();
 const puppeteer = require('puppeteer');
 
 
-searchRouter.get("/searchGame", async (req, res) => {
+searchRouter.post("/searchGame", async (req, res) => {
+    const { gameName} = req.body;
 
-    const url = "https://www.allkeyshop.com/blog/buy-sea-of-thieves-cd-key-compare-prices/";
+    const game = gameName.replace(/\s/g, '-')
+  
+
+    const url = "https://www.allkeyshop.com/blog/buy-"+game+"-cd-key-compare-prices/";
     const browser = await puppeteer.launch({
       headless : false   
       });
@@ -16,13 +20,14 @@ searchRouter.get("/searchGame", async (req, res) => {
     await page.goto(url,{
       waitUntil:["load","domcontentloaded","networkidle0", "networkidle2"]
     }); 
-    
-    await page.waitForSelector('#offer_offer');
+
+  
+   // await page.waitForSelector('#offer_offer');
 
     const elementos = await page.evaluate(() => {
         let img = document.querySelector('#gamepageSlider > div.gamepage__slide.gallery-slider.showing > a > img')?.getAttribute('src');
         let elemnts = Array.from(document.querySelectorAll('#offer_offer'));
-        let webs = elemnts.map(element => {
+        let games = elemnts.map(element => {
           
            const tmp= {} as any;
             tmp.imgGame = img;
@@ -36,11 +41,16 @@ searchRouter.get("/searchGame", async (req, res) => {
          
           return tmp;
         })
-        return webs;
+        return games;
     });
 
     await browser.close();
-    res.send(elementos);
+    if (elementos.length == 0){
+      res.status(400).send();
+    
+    } else {
+      res.send(elementos);
+    }
  
   } catch (error) {
     await browser.close();

@@ -36,33 +36,36 @@ var __generator = (this && this.__generator) || function (thisArg, body) {
     }
 };
 var express_1 = require("express");
-var jwt_1 = require("../security/jwt");
-var UserModel = require('../models/UserModel').UserModel;
-var userRouter = express_1.Router();
-userRouter.post("/Register", function (req, res) { return __awaiter(void 0, void 0, void 0, function () {
-    var _a, email, password, payload, user, users, error_1;
+var DataRouter = express_1.Router();
+var puppeteer = require('puppeteer');
+var GameModel = require('../models/GameModel').GameModel;
+DataRouter.post("/addGame", function (req, res) { return __awaiter(void 0, void 0, void 0, function () {
+    var _a, name, startDate, finishDate, duration, description, payload, game, games, error_1;
     return __generator(this, function (_b) {
         switch (_b.label) {
             case 0:
-                _a = req.body, email = _a.email, password = _a.password;
+                _a = req.body, name = _a.name, startDate = _a.startDate, finishDate = _a.finishDate, duration = _a.duration, description = _a.description;
                 payload = {
-                    email: email,
-                    password: password
+                    name: name,
+                    startDate: startDate,
+                    finishDate: finishDate,
+                    duration: duration,
+                    description: description
                 };
-                user = new UserModel(payload);
+                game = new GameModel(payload);
                 _b.label = 1;
             case 1:
                 _b.trys.push([1, 6, , 7]);
-                return [4 /*yield*/, UserModel.findOne({ email: email })];
+                return [4 /*yield*/, GameModel.findOne({ name: name })];
             case 2:
-                users = _b.sent();
-                if (!(users != null)) return [3 /*break*/, 3];
+                games = _b.sent();
+                if (!(games != null)) return [3 /*break*/, 3];
                 res.status(400).send();
                 return [3 /*break*/, 5];
-            case 3: return [4 /*yield*/, user.save()];
+            case 3: return [4 /*yield*/, game.save()];
             case 4:
                 _b.sent();
-                res.send({ user: user });
+                res.send({ game: game });
                 _b.label = 5;
             case 5: return [3 /*break*/, 7];
             case 6:
@@ -73,33 +76,4 @@ userRouter.post("/Register", function (req, res) { return __awaiter(void 0, void
         }
     });
 }); });
-userRouter.post("/Login", function (req, res) { return __awaiter(void 0, void 0, void 0, function () {
-    var _a, email, password, jwt, users, error_2;
-    return __generator(this, function (_b) {
-        switch (_b.label) {
-            case 0:
-                _a = req.body, email = _a.email, password = _a.password;
-                jwt = jwt_1.generateJWT({ email: email });
-                _b.label = 1;
-            case 1:
-                _b.trys.push([1, 3, , 4]);
-                return [4 /*yield*/, UserModel.findOne({ email: email, password: password })];
-            case 2:
-                users = _b.sent();
-                console.log(users);
-                if (users == null) {
-                    res.status(400).send();
-                }
-                else {
-                    res.status(200).send();
-                }
-                return [3 /*break*/, 4];
-            case 3:
-                error_2 = _b.sent();
-                res.status(500).send(error_2);
-                return [3 /*break*/, 4];
-            case 4: return [2 /*return*/];
-        }
-    });
-}); });
-module.exports = userRouter;
+module.exports = DataRouter;
