@@ -32,6 +32,7 @@ searchRouter.get("/searchGame", async (req, res) => {
             } else {
               tmp.precio = element.querySelector('#offer_has_coupon > div.price > span.price-value')?.textContent?.replace(/\s/g,'') + " Price with coupon";
             }
+            tmp.buyUrl = element.querySelector('div.offers-table-row-cell.buy-btn-cell > a.d-lg-none.buy-btn.x-offer-buy-btn')?.getAttribute('href');
          
           return tmp;
         })

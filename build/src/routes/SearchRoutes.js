@@ -68,7 +68,7 @@ searchRouter.get("/searchGame", function (req, res) { return __awaiter(void 0, v
                         var img = (_a = document.querySelector('#gamepageSlider > div.gamepage__slide.gallery-slider.showing > a > img')) === null || _a === void 0 ? void 0 : _a.getAttribute('src');
                         var elemnts = Array.from(document.querySelectorAll('#offer_offer'));
                         var webs = elemnts.map(function (element) {
-                            var _a, _b, _c, _d, _e, _f;
+                            var _a, _b, _c, _d, _e, _f, _g;
                             var tmp = {};
                             tmp.imgGame = img;
                             tmp.web = (_a = element.querySelector('#offer_merchant_name')) === null || _a === void 0 ? void 0 : _a.innerHTML;
@@ -78,6 +78,7 @@ searchRouter.get("/searchGame", function (req, res) { return __awaiter(void 0, v
                             else {
                                 tmp.precio = ((_f = (_e = element.querySelector('#offer_has_coupon > div.price > span.price-value')) === null || _e === void 0 ? void 0 : _e.textContent) === null || _f === void 0 ? void 0 : _f.replace(/\s/g, '')) + " Price with coupon";
                             }
+                            tmp.buyUrl = (_g = element.querySelector('div.offers-table-row-cell.buy-btn-cell > a.d-lg-none.buy-btn.x-offer-buy-btn')) === null || _g === void 0 ? void 0 : _g.getAttribute('href');
                             return tmp;
                         });
                         return webs;
