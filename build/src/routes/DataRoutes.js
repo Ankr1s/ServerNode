@@ -39,6 +39,7 @@ var express_1 = require("express");
 var DataRouter = express_1.Router();
 var puppeteer = require('puppeteer');
 var GameModel = require('../models/GameModel').GameModel;
+var NotificationModel = require('../models/NotificationModel').NotificationModel;
 DataRouter.post("/addGame", function (req, res) { return __awaiter(void 0, void 0, void 0, function () {
     var _a, name, startDate, finishDate, duration, description, payload, game, games, error_1;
     return __generator(this, function (_b) {
@@ -73,6 +74,88 @@ DataRouter.post("/addGame", function (req, res) { return __awaiter(void 0, void 
                 res.status(500).send(error_1);
                 return [3 /*break*/, 7];
             case 7: return [2 /*return*/];
+        }
+    });
+}); });
+DataRouter.get("/getGames", function (req, res) { return __awaiter(void 0, void 0, void 0, function () {
+    var games, error_2;
+    return __generator(this, function (_a) {
+        switch (_a.label) {
+            case 0:
+                _a.trys.push([0, 2, , 3]);
+                return [4 /*yield*/, GameModel.find({})];
+            case 1:
+                games = _a.sent();
+                if (games == null) {
+                    res.status(400).send();
+                }
+                else {
+                    res.send({ games: games });
+                }
+                return [3 /*break*/, 3];
+            case 2:
+                error_2 = _a.sent();
+                res.status(500).send(error_2);
+                return [3 /*break*/, 3];
+            case 3: return [2 /*return*/];
+        }
+    });
+}); });
+DataRouter.post("/addNotification", function (req, res) { return __awaiter(void 0, void 0, void 0, function () {
+    var _a, name, price, payload, notification, notifications, error_3;
+    return __generator(this, function (_b) {
+        switch (_b.label) {
+            case 0:
+                _a = req.body, name = _a.name, price = _a.price;
+                payload = {
+                    name: name,
+                    price: price
+                };
+                notification = new NotificationModel(payload);
+                _b.label = 1;
+            case 1:
+                _b.trys.push([1, 6, , 7]);
+                return [4 /*yield*/, NotificationModel.findOne({ name: name })];
+            case 2:
+                notifications = _b.sent();
+                if (!(notifications != null)) return [3 /*break*/, 3];
+                res.status(400).send();
+                return [3 /*break*/, 5];
+            case 3: return [4 /*yield*/, notification.save()];
+            case 4:
+                _b.sent();
+                res.send({ game: notification });
+                _b.label = 5;
+            case 5: return [3 /*break*/, 7];
+            case 6:
+                error_3 = _b.sent();
+                res.status(500).send(error_3);
+                return [3 /*break*/, 7];
+            case 7: return [2 /*return*/];
+        }
+    });
+}); });
+DataRouter.get("/getNotifications", function (req, res) { return __awaiter(void 0, void 0, void 0, function () {
+    var notifications, error_4;
+    return __generator(this, function (_a) {
+        switch (_a.label) {
+            case 0:
+                _a.trys.push([0, 2, , 3]);
+                return [4 /*yield*/, NotificationModel.find({})];
+            case 1:
+                notifications = _a.sent();
+                if (notifications == null) {
+                    res.status(400).send();
+                }
+                else {
+                    res.send({ notifications: notifications });
+                }
+                return [3 /*break*/, 3];
+            case 2:
+                error_4 = _a.sent();
+                res.status(500).send(error_4);
+                return [3 /*break*/, 3];
+            case 3: return [2 /*return*/];
         }
     });
 }); });

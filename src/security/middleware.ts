@@ -1,5 +1,5 @@
 import * as jwt from './jwt';
-const PATH_WITHOUT_JWT: string[] = ['/users/login', '/users/register', '/search/searchGame', '/games/addGame'];
+const PATH_WITHOUT_JWT: string[] = ['/users/login', '/users/register', '/search/searchGame', '/games/addGame', '/games/getGames', '/games/addNotification', '/games/getNotifications' ];
 
 export function middleware(req: any, res: any, next: any) {
     // console.log('BODY::', req.body)
