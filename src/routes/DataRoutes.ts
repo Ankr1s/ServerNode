@@ -7,8 +7,9 @@ const NotificationModel = require('../models/NotificationModel').NotificationMod
 
 DataRouter.post("/addGame", async (req, res) => {
   
-    const { name, startDate , finishDate, duration , description} = req.body;
+    const { email, name, startDate , finishDate, duration , description} = req.body;
     const payload = {
+        email: email,
         name : name,
         startDate : startDate,
         finishDate : finishDate,

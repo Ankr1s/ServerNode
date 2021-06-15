@@ -4,7 +4,9 @@ import * as jwt from '../security/jwt';
 const { Schema } = mongoose;
 
 const gameSchema = new Schema({
-    name: {
+    email: {
+        type: String
+    },name: {
         type: String,
         unique: true
     },

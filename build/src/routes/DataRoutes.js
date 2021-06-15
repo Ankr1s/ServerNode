@@ -41,12 +41,13 @@ var puppeteer = require('puppeteer');
 var GameModel = require('../models/GameModel').GameModel;
 var NotificationModel = require('../models/NotificationModel').NotificationModel;
 DataRouter.post("/addGame", function (req, res) { return __awaiter(void 0, void 0, void 0, function () {
-    var _a, name, startDate, finishDate, duration, description, payload, game, games, error_1;
+    var _a, email, name, startDate, finishDate, duration, description, payload, game, games, error_1;
     return __generator(this, function (_b) {
         switch (_b.label) {
             case 0:
-                _a = req.body, name = _a.name, startDate = _a.startDate, finishDate = _a.finishDate, duration = _a.duration, description = _a.description;
+                _a = req.body, email = _a.email, name = _a.name, startDate = _a.startDate, finishDate = _a.finishDate, duration = _a.duration, description = _a.description;
                 payload = {
+                    email: email,
                     name: name,
                     startDate: startDate,
                     finishDate: finishDate,

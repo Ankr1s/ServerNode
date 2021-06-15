@@ -3,7 +3,9 @@ Object.defineProperty(exports, "__esModule", { value: true });
 var mongoose = require("mongoose");
 var Schema = mongoose.Schema;
 var gameSchema = new Schema({
-    name: {
+    email: {
+        type: String
+    }, name: {
         type: String,
         unique: true
     },
