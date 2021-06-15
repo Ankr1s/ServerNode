@@ -11,11 +11,8 @@ searchRouter.post("/searchGame", async (req, res) => {
 
     const url = "https://www.allkeyshop.com/blog/buy-"+game+"-cd-key-compare-prices/";
     const browser = await puppeteer.launch({
-      headless : false,
-      args: [
-        '--no-sandbox',
-        '--disable-setuid-sandbox',
-      ],
+      headless: true,
+      args: ["--no-sandbox"]
       });
     const page = await browser.newPage();
 
