@@ -47,7 +47,11 @@ searchRouter.post("/searchGame", function (req, res) { return __awaiter(void 0, 
                 game = gameName.replace(/\s/g, '-');
                 url = "https://www.allkeyshop.com/blog/buy-" + game + "-cd-key-compare-prices/";
                 return [4 /*yield*/, puppeteer.launch({
-                        headless: false
+                        headless: false,
+                        // args: [
+                        //   '--no-sandbox',
+                        //   '--disable-setuid-sandbox',
+                        // ],
                     })];
             case 1:
                 browser = _a.sent();
