@@ -37,15 +37,16 @@ DataRouter.post("/addGame", async (req, res) => {
 
 
 
-DataRouter.get("/getGames", async (req, res) => {
+DataRouter.post("/getGames", async (req, res) => {
+
+  const { email } = req.body;
 
   try {
-    const games = await GameModel.find({ });
+    const games = await GameModel.find({ email: email });
     if (games == null){
       res.status(400).send();
     }else{
-
-      res.send({games});
+      res.send(games);
     }
     
   } catch (error) {
