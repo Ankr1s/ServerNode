@@ -12,7 +12,7 @@ app.use(Routes);
 app.listen(process.env.PORT || 3000, (): void => {
     mongoose.set('useFindAndModify', false);
     mongoose.set('useUnifiedTopology', true);
-    mongoose.connect('mongodb+srv://test:051298@cluster0.gaugs.mongodb.net/AppDataBase?retryWrites=true&w=majority', {useNewUrlParser: true}).then( (connection: typeof mongoose) => {
+    mongoose.connect('...', {useNewUrlParser: true}).then( (connection: typeof mongoose) => {
         if (connection) {
             console.log('Node is ready and connected to MongoDB')
         }
